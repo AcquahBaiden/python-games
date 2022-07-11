@@ -59,24 +59,19 @@ def receive_coins(drink_info):
     return is_transaction_successful
 
 
-def check_resources_sufficient(drink):
-    if drink["ingredients"]["water"] > resources["water"]:
-        print("Sorry there is not enough water")
-        return False
-    elif drink["ingredients"]["milk"] > resources["milk"]:
-        print("Sorry there is not enough milk")
-        return False
-    elif drink["ingredients"]["coffee"] > resources["coffee"]:
-        print("Sorry there is not enough milk")
-        return False
-    else:
-        return receive_coins(drink)
+def is_resources_sufficient(order_ingredients):
+    for item in order_ingredients:
+        if order_ingredients[item] > resources[item]:
+            print("Sorry there is not enough water")
+            return False
+    return True
 
 
 def update_resources(ingredients):
-    resources["water"] -= ingredients["water"]
-    resources["milk"] -= ingredients["milk"]
-    resources["coffee"] -= ingredients["coffee"]
+    for item in ingredients:
+        resources[item] -= ingredients[item]
+    print(ingredients)
+    print(resources)
 
 
 is_on = True
@@ -89,8 +84,9 @@ while is_on:
         print_report()
     else:
         drink = MENU[choice]
-        is_success = check_resources_sufficient(drink)
+        is_success = is_resources_sufficient(drink["ingredients"])
         if is_success:
+            receive_coins(drink)
             update_resources(drink["ingredients"])
 
 
