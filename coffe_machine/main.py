@@ -1,3 +1,6 @@
+from decimal import Rounded
+
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -34,29 +37,35 @@ resources = {
 
 
 def print_report():
+    """Prints the resources and amount remaining"""
     print(f'Water: {resources["water"]}')
     print(f'Milk: {resources["milk"]}')
     print(f'Coffee: {resources["coffee"]}')
     print(f'Money: {profit}')
 
 
-def receive_coins(drink_info):
-    is_transaction_successful = False;
+def process_coins():
+    """Receives coins and returns Total inserted"""
     quarters = input("How many quarters?")
     dimes = input("How many dimes?")
     nickles = input("How many nickles?")
     pennies = input("How many pennies?")
 
     total = (int(quarters) * 0.25) + (int(dimes) * 0.10) + (int(nickles) * 0.05) + (int(pennies) * 0.01)
-    if total > drink["cost"]:
-        print(f"Here is ${total - drink_info['cost']:.2f} in change")
-        is_transaction_successful = True
-    elif total < drink_info["cost"]:
-        print("You don't have enough money. Money refunded")
-    elif total == drink_info["cost"]:
-        print("No need to give you any change")
-        is_transaction_successful = True
-    return is_transaction_successful
+    return total
+
+
+def is_transaction_successful(amount_received, drink_cost):
+    """Returns True when the payment amount is accept and False if money is insufficient"""
+    if amount_received >= drink_cost:
+        change = round(amount_received - drink_cost, 2)
+        print(f"Here is ${change} in change")
+        global profit
+        profit += drink_cost
+        return True
+    else:
+        print("Sorry money is insufficient. Money refunded")
+        return False
 
 
 def is_resources_sufficient(order_ingredients):
@@ -70,8 +79,6 @@ def is_resources_sufficient(order_ingredients):
 def update_resources(ingredients):
     for item in ingredients:
         resources[item] -= ingredients[item]
-    print(ingredients)
-    print(resources)
 
 
 is_on = True
@@ -84,9 +91,10 @@ while is_on:
         print_report()
     else:
         drink = MENU[choice]
-        is_success = is_resources_sufficient(drink["ingredients"])
-        if is_success:
-            receive_coins(drink)
+        if is_resources_sufficient(drink["ingredients"]):
+            payment = process_coins()
+            is_transaction_successful(payment, drink["cost"])
             update_resources(drink["ingredients"])
-
+        else:
+            print("Sorry your money is insufficient")
 
