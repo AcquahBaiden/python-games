@@ -16,4 +16,4 @@ while is_on:
         menu = Menu()
         print(menu.get_items().find(choice))
         if menu.get_items().find(choice):
-            print('it is inside')
+            print('it is inside. On master here')
