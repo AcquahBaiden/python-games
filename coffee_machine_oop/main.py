@@ -15,5 +15,6 @@ while is_on:
     else:
         menu = Menu()
         print(menu.get_items().find(choice))
+        options = menu.get_items()
         if menu.get_items().find(choice):
-            print('it is inside')
+            print('it is inside here')
