@@ -1,10 +1,10 @@
 
 import random
-from turtle import Turtle
+import turtle
 
 colours = ["royal blue", "navy", "lime green", "sea green", "yellow green", "crimson", "dark slate blue"]
 
-tony = Turtle
+tony = turtle.Turtle()
 
 
 def draw_shape(num_of_sides):
@@ -17,3 +17,8 @@ def draw_shape(num_of_sides):
 for shape_size in range(3,11):
     tony.color(random.choice(colours))
     draw_shape(shape_size)
+
+
+
+screen = turtle.Screen()
+screen.exitonclick()
