@@ -1,6 +1,6 @@
 import os
 # Set environment variable
-os.environ['TK_SILENCE_DEPRECATION'] = 1
+os.environ['TK_SILENCE_DEPRECATION'] = "1"
 import turtle
 import random
 colors_list = [(199, 12, 31), (195, 67, 21), (213, 13, 9), (32, 91, 188), (234, 151, 39), (232, 229, 5), (48, 219, 59),
@@ -9,6 +9,25 @@ colors_list = [(199, 12, 31), (195, 67, 21), (213, 13, 9), (32, 91, 188), (234, 
                (223, 140, 207), (248, 11, 9), (10, 97, 61), (5, 38, 33), (65, 221, 153)]
 Tony = turtle.Turtle()
 
-Tony.dot(20, random.choice(colors_list))
+Tony.speed("fastest")
+Tony.penup()
+Tony.hideturtle()
+Tony.setheading(225)
+Tony.forward(300)
+Tony.heading(0)
+number_of_dots = 100
+for dot_count in range(1, number_of_dots + 1):
+    Tony.dot(20, random.choice(colors_list))
+    Tony.forward(50)
+    if dot_count % 10 == 0:
+        Tony.setheading(90)
+        Tony.forward(50)
+        Tony.setheading(180)
+        Tony.forward(500)
+        Tony.setheading(0)
+
+
+
+
 screen = turtle.Screen()
 screen.exitonclick()
